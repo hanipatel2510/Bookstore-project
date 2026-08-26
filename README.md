@@ -68,6 +68,10 @@ Run:
 python bookstore_system.py
 ```
 
+## Sample output 
+![output](Output1.png)
+![output](Output2.png)
+
 ## Menu
 
 ``` text
