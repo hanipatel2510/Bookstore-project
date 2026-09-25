@@ -21,6 +21,7 @@ class Bookstore:
         print("Data loaded and cleaned successfully.")
 
     def add_book(self, title, author, genre, price, quantity):
+
         if price <= 0:
             print("Price must be positive.")
             return
@@ -44,27 +45,30 @@ class Bookstore:
         if mask.any():
             self.inventory.loc[mask, "Quantity"] = quantity
             print("Inventory updated successfully.")
+
         else:
             print("Book not found.")
 
     def record_sale(self, title, quantity):
+
         if quantity <= 0:
             print("Sale quantity must be positive.")
             return
 
         mask = self.inventory["Title"].str.lower() == title.lower()
+
         if not mask.any():
             print("Book not found.")
             return
 
         index = self.inventory.index[mask][0]
+
         available_stock = self.inventory.loc[index, "Quantity"]
         price = self.inventory.loc[index, "Price"]
 
         if quantity > available_stock:
             print("Not enough stock available.")
             return
-
         self.inventory.loc[index, "Quantity"] -= quantity
         revenue = quantity * price
         new_sale = pd.DataFrame({
@@ -73,12 +77,13 @@ class Bookstore:
             "Quantity Sold": [quantity],
             "Total Revenue": [revenue]
         })
-        self.sales = pd.concat([self.sales, new_sale], ignore_index=True)
+        self.sales = pd.concat([self.sales, new_sale],ignore_index=True)
 
         print("Sale recorded successfully.")
         print("Revenue:", revenue)
 
     def generate_report(self):
+
         print("\n========== Bookstore Report ==========")
         revenues = self.sales["Total Revenue"].to_numpy()
         total_revenue = np.sum(revenues)
@@ -87,43 +92,37 @@ class Bookstore:
         average_price = np.mean(prices)
         quantities = self.sales["Quantity Sold"].to_numpy()
         total_books_sold = np.sum(quantities)
-
         print("Total Revenue:", round(total_revenue, 2))
         print("Average Revenue:", round(average_revenue, 2))
         print("Average Book Price:", round(average_price, 2))
         print("Total Books Sold:", int(total_books_sold))
 
-        quality1 = self.sales.groupby("Title")["Quantity Sold"].sum().sort_values(ascending=False)
+        quality1 = (self.sales.groupby("Title")["Quantity Sold"].sum().sort_values(ascending=False))
 
         print("\nBest Selling Books:")
         print(quality1.head(3))
 
-        merged = pd.merge(
-            self.sales,
-            self.inventory[["Title", "Author", "Genre", "Price"]],
-            on="Title",
-            how="left"
-        )
+        merged = pd.merge(self.sales,self.inventory[["Title", "Author", "Genre", "Price"]],on="Title",how="left")
 
-        genre_revenue = merged.groupby("Genre")["Total Revenue"].sum().sort_values(ascending=False)
+        genre_revenue = (merged.groupby("Genre")["Total Revenue"].sum().sort_values(ascending=False))
         print("\nRevenue by Genre:")
         print(genre_revenue)
 
-        author_revenue = merged.groupby("Author")["Total Revenue"].sum().sort_values(ascending=False)
+        author_revenue = ( merged .groupby("Author")["Total Revenue"] .sum() .sort_values(ascending=False))
         print("\nRevenue by Author:")
         print(author_revenue.head(10))
 
-        monthly_sales = self.sales.groupby(
-            self.sales["Date"].dt.to_period("M")
-        )["Total Revenue"].sum()
+        monthly_sales = ( self.sales.groupby(self.sales["Date"].dt.to_period("M")) ["Total Revenue"].sum())
 
         if len(monthly_sales) > 1:
-            growth = np.diff(monthly_sales) / monthly_sales.iloc[:-1].to_numpy() * 100
+            growth = np.diff(monthly_sales) / monthly_sales[:-1] * 100
             print("\nSales Growth Rates:")
             print(growth)
+
         else:
             print("\nNot enough months to calculate growth.")
 
+   
     def visualization(self):
         merged = pd.merge(
             self.sales,
@@ -141,12 +140,7 @@ class Bookstore:
             .sort_values(ascending=False)
             .head(5)
         )
-        sns.barplot(
-            x=author_sales.values,
-            y=author_sales.index,
-            hue=author_sales.index,
-            legend=False,
-        )
+        sns.barplot( x=author_sales.values, y=author_sales.index, hue=author_sales.index, legend=False, )
         plt.title("Total Sales by Author")
         plt.xlabel("Quantity Sold")
         plt.ylabel("Author")
@@ -182,11 +176,11 @@ class Bookstore:
         plt.show()
         print("Generated Graphs.")
 
-
 book1 = Bookstore()
 
-print("\nWELCOME TO BOOKSTORE MANAGEMENT SYSTEM")
+print("\n📚 WELCOME TO BOOKSTORE MANAGEMENT SYSTEM   ")
 while True:
+
     print("\n========== Bookstore System ==========")
     print("1. Add Book")
     print("2. Update Inventory")
@@ -196,7 +190,6 @@ while True:
     print("6. Show Inventory")
     print("7. Show Sales")
     print("8. Exit")
-
     try:
         choice1 = int(input("Enter your choice: "))
 
@@ -208,21 +201,22 @@ while True:
                 try:
                     price = float(input("Enter price: "))
                     quantity = int(input("Enter quantity: "))
-                    book1.add_book(title, author, genre, price, quantity)
+                    book1.add_book(title, author, genre,price,quantity)
+
                 except ValueError:
                     print("Please enter valid numeric values.")
             case 2:
                 title = input("Enter book title: ")
                 try:
                     quantity = int(input("Enter new quantity: "))
-                    book1.update_inventory(title, quantity)
+                    book1.update_inventory(title,quantity)
                 except ValueError:
                     print("Quantity must be a number.")
             case 3:
                 title = input("Enter book title: ")
                 try:
                     quantity = int(input("Enter quantity sold: "))
-                    book1.record_sale(title, quantity)
+                    book1.record_sale( title, quantity)
                 except ValueError:
                     print("Quantity must be a number.")
             case 4:
@@ -237,6 +231,6 @@ while True:
                 print("Thank you for using Bookstore System.")
                 break
             case _:
-                print("Invalid choice!")
+                print("Invalid choice1!")
     except ValueError:
-        print("Invalid choice! Enter only number.")
+        print("Invalid choice1! Enter only number.")
