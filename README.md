@@ -4,9 +4,9 @@ A Python-based bookstore management system using **OOP, NumPy, Pandas,
 Matplotlib, and Seaborn** to manage inventory, record sales, analyze
 revenue, and visualize sales data.
 
-## 🚀 Live Demo
+## 🌐 Live Application
 
-You can view the live Streamlit application here:https://bookstore-project-bcts7jkbqzamvshs3vnhye.streamlit.app/
+🔗 **[📚 Open Bookstore Management System](https://bookstore-project-bcts7jkbqzamvshs3vnhye.streamlit.app/)**
 
 ## Features
 
