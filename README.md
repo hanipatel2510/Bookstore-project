@@ -1,14 +1,12 @@
 # Bookstore Management System
 
-## 🚀 Live Demo
-
-You can view the live Streamlit application here:https://bookstore-project-bcts7jkbqzamvshs3vnhye.streamlit.app/
-
-# Bookstore Management System
-
 A Python-based bookstore management system using **OOP, NumPy, Pandas,
 Matplotlib, and Seaborn** to manage inventory, record sales, analyze
 revenue, and visualize sales data.
+
+## 🚀 Live Demo
+
+You can view the live Streamlit application here:https://bookstore-project-bcts7jkbqzamvshs3vnhye.streamlit.app/
 
 ## Features
 
